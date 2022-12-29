@@ -1,0 +1,42 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}{% trans "Food and Drink Market" %}{% endblock %}</title>
+  <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+<body>
+  <div id="header">
+    <img  class="logo" src="https://www.meme-arsenal.com/memes/6a61396042764a5a42ae51eca1f5c7ec.jpg" style="width: 150px; height: 150px;"></a>
+    <a href="/" class="logo">{% trans "Food and Drink Market" %}</a>
+    </div>
+  </div>
+  <div id="subheader">
+    <div class="cart">
+      {% with total_items=cart|length %}
+          {% if cart|length > 0 %}
+            {% trans "Your cart" %}
+            <a href="{% url "cart:cart_detail" %}">
+              {% blocktrans with total_items_plural=total_items|pluralize  total_price=cart.get_total_price %}
+                {{ total_items }} item{{ total_items_plural }},
+                ${{ total_price }}
+              {% endblocktrans %}
+            </a>
+          {% else %}
+            {% trans "Your cart is empty." %}
+          {% endif %}
+        {% endwith %}
+    </div>
+  </div>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+<div id="footer">
+      ViruS &copy; 2022. All rights reserved
+</div>
+
+</body>
+</html>
